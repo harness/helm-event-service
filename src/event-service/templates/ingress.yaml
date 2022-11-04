@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: event-service-grpc
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    nginx.ingress.kubernetes.io/server-alias: ~events-grpc-([a-z0-9-]+)\.harness\.io
+    nginx.ingress.kubernetes.io/proxy-body-size: 2m
+  spec:
+    ingressClassName: {{.Values.ingress.className}}
+    tls:
+      - hosts:
+        - "events-grpc-app.harness.io"
+    rules:
+    - host: "events-grpc-app.harness.io"
+      http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: event-service
+            port:
+              number: {{ .Values.service.port }}
