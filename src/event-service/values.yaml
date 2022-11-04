@@ -26,7 +26,7 @@ waitForInitContainer:
     tag: "latest"
     digest: ""
 
-eventsvc-service-accounts:
+eventSvcServiceAccounts:
   ceGCPHomeProjectCreds:
     name: placeHolderKey
     key: placeHolderVariable
