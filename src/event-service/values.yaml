@@ -3,13 +3,16 @@
 # Declare variables to be passed into your templates.
 global:
   loadbalancerURL: "https://test"
+
 replicaCount: 2
+
 maxSurge: 100%
+
 maxUnavailable: 0
 
 java:
   memory: 1024
-  memoryLimit: 600
+
 image:
   registry: docker.io
   repository: harness/event-service-signed
@@ -28,8 +31,8 @@ waitForInitContainer:
 
 eventSvcServiceAccounts:
   ceGCPHomeProjectCreds:
-    name: placeHolderKey
-    key: placeHolderVariable
+    name: placeHolderName
+    key: placeHolderKey
 
 mongoSecrets:
   userName:

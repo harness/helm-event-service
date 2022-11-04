@@ -63,6 +63,11 @@ spec:
                   key: {{ .Values.timescaleSecret.password.key }}
             - name: TIMESCALE_URI
               value: 'jdbc:postgresql://timescaledb-single-chart.{{ .Release.Namespace }}:5432/harness'
+            - name: ce-gcp-home-project-creds
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.eventSvcServiceAccounts.ceGCPHomeProjectCreds.name | quote }}
+                  key: {{ .Values.eventSvcServiceAccounts.ceGCPHomeProjectCreds.key | quote }}
           livenessProbe:
             exec:
               command: ["/bin/grpc_health_probe", "-addr=:9889"]
