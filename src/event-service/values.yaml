@@ -3,6 +3,14 @@
 # Declare variables to be passed into your templates.
 global:
   loadbalancerURL: "https://test"
+  ingress:
+    enabled: false
+    className: harness
+    hosts:
+      - events-grpc-app.harness.io
+    tls:
+      enabled: true
+      secretName: ''
 
 replicaCount: 2
 
@@ -18,7 +26,7 @@ image:
   repository: harness/event-service-signed
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "77300-000"
+  tag: "77300"
   digest: ""
 
 waitForInitContainer:
@@ -79,18 +87,19 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 9889
+  port: 7280
+  port2: 9889
 
 ingress:
   className: nginx
 
 resources:
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    cpu: "512m"
+    memory: "1440Mi"
   requests:
-    cpu: 1
-    memory: 3Gi
+    cpu: "512m"
+    memory: "1440Mi"
 
 autoscaling:
   enabled: true
@@ -104,12 +113,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-# Commented out at request of Will as not needed.
-# env:
-#   secrets:
-#   config:
-#     APP_ENABLE_UI: "true"
-#     APP_TOKEN_JWT_SECRET: test
-#     APP_INTERNAL_TOKEN_JWT_SECRET: test
-#     STO_SERVICE_GLOBAL_TOKEN: "token"

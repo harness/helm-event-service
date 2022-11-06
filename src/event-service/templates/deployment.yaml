@@ -52,40 +52,49 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          envFrom:
-            - configMapRef:
-                name: event-service
-          env:
-            - name : TIMESCALEDB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.timescaleSecret.password.name }}
-                  key: {{ .Values.timescaleSecret.password.key }}
-            - name: TIMESCALE_URI
-              value: 'jdbc:postgresql://timescaledb-single-chart.{{ .Release.Namespace }}:5432/harness'
-            - name: ce-gcp-home-project-creds
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.eventSvcServiceAccounts.ceGCPHomeProjectCreds.name | quote }}
-                  key: {{ .Values.eventSvcServiceAccounts.ceGCPHomeProjectCreds.key | quote }}
           livenessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:9889"]
+            httpGet:
+              path: /bin/grpc_health_probe
+              port: {{ .Values.service.port2 }}
             initialDelaySeconds: 300
             timeoutSeconds: 5
             periodSeconds: 10
             failureThreshold: 20
           readinessProbe:
-            exec:
-              command: ["/bin/grpc_health_probe", "-addr=:9889"]
+            httpGet:
+              path: /bin/grpc_health_probe
+              port: {{ .Values.service.port2 }}
             initialDelaySeconds: 90
             timeoutSeconds: 5
             periodSeconds: 5
             failureThreshold: 6
-          ports:
-          - name: event
-            containerPort: {{.Values.service.port}}
-            protocol: TCP
+          envFrom:
+            - configMapRef:
+                name: event-service
+          env:
+            - name: MONGODB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mongoSecrets.userName.name }}
+                  key: {{ .Values.mongoSecrets.userName.key }}
+            - name: MONGODB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.mongoSecrets.password.name }}
+                  key: {{ .Values.mongoSecrets.password.key }}
+            - name: EVENTS_MONGO_URI
+              value: {{ include "harnesscommon.database.mongo" (dict "database" "events" "context" $) }}
+            - name: MONGO_URI
+              value: {{ include "harnesscommon.database.mongo" (dict "database" "harness" "context" $) }}
+            - name : TIMESCALEDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.timescaleSecret.password.name }}
+                  key: {{ .Values.timescaleSecret.password.key }}
+            - name : TIMESCALEDB_USERNAME
+              value: postgres
+            - name: TIMESCALEDB_URI
+              value: 'jdbc:postgresql://timescaledb-single-chart.{{ .Release.Namespace }}:5432/harness'
       affinity:
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -94,7 +103,7 @@ spec:
               - key: app
                 operator: In
                 values:
-                - nextgen-ce
+                - event-service
             topologyKey: "kubernetes.io/hostname"
       {{- with .Values.nodeSelector }}
       nodeSelector:
