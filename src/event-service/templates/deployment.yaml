@@ -52,22 +52,20 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "common.images.image" (dict "imageRoot" .Values.image "global" .Values.global) }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          livenessProbe:
-            httpGet:
-              path: /bin/grpc_health_probe
-              port: {{ .Values.service.port2 }}
-            initialDelaySeconds: 300
-            timeoutSeconds: 5
-            periodSeconds: 10
-            failureThreshold: 20
-          readinessProbe:
-            httpGet:
-              path: /bin/grpc_health_probe
-              port: {{ .Values.service.port2 }}
+          readinessProbe:  
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:9889"]
             initialDelaySeconds: 90
             timeoutSeconds: 5
             periodSeconds: 5
             failureThreshold: 6
+          livenessProbe:
+            exec:
+              command: ["/bin/grpc_health_probe", "-addr=:9889"]
+            initialDelaySeconds: 300
+            timeoutSeconds: 5
+            periodSeconds: 10
+            failureThreshold: 20
           envFrom:
             - configMapRef:
                 name: event-service
