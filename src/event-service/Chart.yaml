@@ -32,3 +32,4 @@ dependencies:
   - name: common
     version: 2.x.x
     repository: https://charts.bitnami.com/bitnami
+    
