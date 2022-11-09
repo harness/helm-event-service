@@ -70,3 +70,7 @@ Create the name of the service account to use
 - { name: APP_DATABASE_DATASOURCE, value: "{{ printf "postgres://postgres:$(DB_PASSWORD)@postgres:5432" }}" }
 - { name: APP_DB_MIGRATION_DATASOURCE, value: "{{ printf "postgres://postgres:$(DB_PASSWORD)@postgres:5432" }}" }
 {{- end }}
+
+{{- define "event-service.generateMountSecrets" }}
+    ce-gcp-home-project-creds: {{ include "common.secrets.passwords.manage" (dict "secret" "eventsvc-secret-mount" "key" "ce-gcp-home-project-creds" "providedValues" (list "ce-gcp-home-project-creds") "length" 10 "context" $) }}
+{{- end }}

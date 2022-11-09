@@ -1,6 +1,6 @@
 # event-service
 
-![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.773.0](https://img.shields.io/badge/AppVersion-1.773.0-informational?style=flat-square)
+![Version: 0.1.3](https://img.shields.io/badge/Version-0.1.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.773.0](https://img.shields.io/badge/AppVersion-1.773.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -19,6 +19,7 @@ A Helm chart for Kubernetes
 | autoscaling.maxReplicas | int | `2` |  |
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
+| ce-gcp-home-project-creds | string | `""` |  |
 | defaultInternalImageConnector | string | `"test"` |  |
 | eventSvcServiceAccounts.ceGCPHomeProjectCreds.key | string | `"placeHolderKey"` |  |
 | eventSvcServiceAccounts.ceGCPHomeProjectCreds.name | string | `"placeHolderName"` |  |
@@ -33,7 +34,7 @@ A Helm chart for Kubernetes
 | image.pullPolicy | string | `"Always"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"harness/event-service-signed"` |  |
-| image.tag | string | `"77300"` |  |
+| image.tag | string | `"77317"` |  |
 | ingress.className | string | `"nginx"` |  |
 | java.memory | int | `1024` |  |
 | maxSurge | string | `"100%"` |  |
