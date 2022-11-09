@@ -10,8 +10,6 @@ data:
   MONGO_INDEX_MANAGER_MODE: "MANUAL"
   EVEMTS_MONGO_INDEX_MANAGER_MODE: "MANUAL"
   DEPLOY_MODE: "KUBERNETES_ONPREM"
-  GOOGLE_APPLICATION_CREDENTIALS: /opt/harness/svc/ceng_gcp_credentials.json
+  GOOGLE_APPLICATION_CREDENTIALS: /opt/harness/svc/ce_gcp_home_project_creds.json
   STACK_DRIVER_LOGGING_ENABLED: "false"
   MEMORY: {{ .Values.java.memory | quote }}
-  MONGO_URI: {{ include "harnesscommon.database.mongo" (dict "database" "harness" "context" $) }}
-  EVENTS_MONGO_URI: {{ include "harnesscommon.database.mongo" (dict "database" "events" "context" $) }}

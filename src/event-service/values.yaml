@@ -55,6 +55,8 @@ timescaleSecret:
     name: harness-secrets
     key: timescaledbPostgresPassword
 
+ce-gcp-home-project-creds: ""
+
 nameOverride: ""
 fullnameOverride: ""
 
