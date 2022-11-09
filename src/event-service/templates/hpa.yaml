@@ -2,15 +2,15 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: nextgen-ce
+  name: event-service
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "nextgen-ce.labels" . | nindent 4 }}
+    {{- include "event-service.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: nextgen-ce
+    name: event-service
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   {{- if .Values.autoscaling.targetCPUUtilizationPercentage }}

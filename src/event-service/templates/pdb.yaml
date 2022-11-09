@@ -4,7 +4,7 @@ metadata:
   name: event-service
   namespace: {{ .Release.Namespace }}
 spec:
-  minAvailable: "50%"
+  minAvailable: 1
   selector:
    matchLabels:
     app: event-service

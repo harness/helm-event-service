@@ -1,6 +1,6 @@
 # event-service
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.773.0](https://img.shields.io/badge/AppVersion-1.773.0-informational?style=flat-square)
+![Version: 0.1.1](https://img.shields.io/badge/Version-0.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.773.0](https://img.shields.io/badge/AppVersion-1.773.0-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -20,18 +20,22 @@ A Helm chart for Kubernetes
 | autoscaling.minReplicas | int | `1` |  |
 | autoscaling.targetCPUUtilizationPercentage | int | `80` |  |
 | defaultInternalImageConnector | string | `"test"` |  |
-| eventsvc-service-accounts.ceGCPHomeProjectCreds.key | string | `"placeHolderVariable"` |  |
-| eventsvc-service-accounts.ceGCPHomeProjectCreds.name | string | `"placeHolderKey"` |  |
+| eventSvcServiceAccounts.ceGCPHomeProjectCreds.key | string | `"placeHolderKey"` |  |
+| eventSvcServiceAccounts.ceGCPHomeProjectCreds.name | string | `"placeHolderName"` |  |
 | fullnameOverride | string | `""` |  |
+| global.ingress.className | string | `"harness"` |  |
+| global.ingress.enabled | bool | `false` |  |
+| global.ingress.hosts[0] | string | `"events-grpc-app.harness.io"` |  |
+| global.ingress.tls.enabled | bool | `true` |  |
+| global.ingress.tls.secretName | string | `""` |  |
 | global.loadbalancerURL | string | `"https://test"` |  |
 | image.digest | string | `""` |  |
 | image.pullPolicy | string | `"Always"` |  |
 | image.registry | string | `"docker.io"` |  |
 | image.repository | string | `"harness/event-service-signed"` |  |
-| image.tag | string | `"77300-000"` |  |
+| image.tag | string | `"77300"` |  |
 | ingress.className | string | `"nginx"` |  |
 | java.memory | int | `1024` |  |
-| java.memoryLimit | int | `600` |  |
 | maxSurge | string | `"100%"` |  |
 | maxUnavailable | int | `0` |  |
 | mongoSecrets.password.key | string | `"mongodb-root-password"` |  |
@@ -45,10 +49,13 @@ A Helm chart for Kubernetes
 | podSecurityContext | object | `{}` |  |
 | redislabsCATruststore | string | `"test"` |  |
 | replicaCount | int | `2` |  |
-| resources.requests.cpu | int | `1` |  |
-| resources.requests.memory | string | `"3Gi"` |  |
+| resources.limits.cpu | string | `"512m"` |  |
+| resources.limits.memory | string | `"1440Mi"` |  |
+| resources.requests.cpu | string | `"512m"` |  |
+| resources.requests.memory | string | `"1440Mi"` |  |
 | securityContext | object | `{}` |  |
-| service.port | int | `9889` |  |
+| service.port | int | `7280` |  |
+| service.port2 | int | `9889` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.create | bool | `false` |  |

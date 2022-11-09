@@ -3,13 +3,24 @@
 # Declare variables to be passed into your templates.
 global:
   loadbalancerURL: "https://test"
+  ingress:
+    enabled: false
+    className: harness
+    hosts:
+      - events-grpc-app.harness.io
+    tls:
+      enabled: true
+      secretName: ''
+
 replicaCount: 2
+
 maxSurge: 100%
+
 maxUnavailable: 0
 
 java:
   memory: 1024
-  memoryLimit: 600
+
 image:
   registry: docker.io
   repository: harness/event-service-signed
@@ -26,10 +37,10 @@ waitForInitContainer:
     tag: "latest"
     digest: ""
 
-eventsvc-service-accounts:
+eventSvcServiceAccounts:
   ceGCPHomeProjectCreds:
-    name: placeHolderKey
-    key: placeHolderVariable
+    name: placeHolderName
+    key: placeHolderKey
 
 mongoSecrets:
   userName:
@@ -76,18 +87,19 @@ securityContext: {}
 
 service:
   type: ClusterIP
-  port: 9889
+  port: 7280
+  port2: 9889
 
 ingress:
   className: nginx
 
 resources:
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+  limits:
+    cpu: "512m"
+    memory: "1440Mi"
   requests:
-    cpu: 1
-    memory: 3Gi
+    cpu: "512m"
+    memory: "1440Mi"
 
 autoscaling:
   enabled: true
@@ -101,12 +113,3 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
-
-# Commented out at request of Will as not needed.
-# env:
-#   secrets:
-#   config:
-#     APP_ENABLE_UI: "true"
-#     APP_TOKEN_JWT_SECRET: test
-#     APP_INTERNAL_TOKEN_JWT_SECRET: test
-#     STO_SERVICE_GLOBAL_TOKEN: "token"
