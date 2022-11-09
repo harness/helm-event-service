@@ -3,6 +3,23 @@ entries:
   event-service:
   - apiVersion: v2
     appVersion: 1.773.0
+    created: "2022-11-09T11:01:30.144167849Z"
+    dependencies:
+    - name: harness-common
+      repository: https://harness.github.io/helm-common
+      version: 1.x.x
+    - name: common
+      repository: https://charts.bitnami.com/bitnami
+      version: 2.x.x
+    description: A Helm chart for Kubernetes
+    digest: 4b618854823e0d9e55fcffbb600d1b0273612993fe17f4e8c727a8686df7d33b
+    name: event-service
+    type: application
+    urls:
+    - https://github.com/harness/helm-event-service/releases/download/event-service-0.1.4/event-service-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.773.0
     created: "2022-11-09T10:13:00.693271198Z"
     dependencies:
     - name: harness-common
@@ -29,4 +46,4 @@ entries:
     urls:
     - https://github.com/harness/helm-event-service/releases/download/event-service-0.1.1/event-service-0.1.1.tgz
     version: 0.1.1
-generated: "2022-11-09T10:13:00.693282598Z"
+generated: "2022-11-09T11:01:30.144179549Z"
